@@ -1,0 +1,19 @@
+@(deletePageName: String, form1: Form[models.ShopList])
+
+@main(deletePageName) {
+  <h1>登録データーの削除</h1>
+  <p>@deletePageName</p>
+  @helper.form(action = routes.Application.delete) {
+    @(helper.inputText (
+      field = form1("id")
+    ))
+
+    <!-- ShopListモデルの要素をすべて必須項目として扱っているので、渡すときにすべて入力された状態で渡さなければならない。よって泥臭いけど非表示の項目としてすべてSubmitする-->
+    <input type="hidden" name="name" value="dummy" />
+    <input type="hidden" name="name_en" value="dummy" />
+    <input type="hidden" name="address" value="dummy" />
+    <input type="hidden" name="telephone_number" value="dummy" />
+
+    <input type="submit">
+    }
+}

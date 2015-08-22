@@ -1,0 +1,19 @@
+@(msg: String, form1: Form[models.ShopList])
+
+@main("アイテム詳細") {
+  <h1>アイテムIDを入力</h1>
+  <p>@msg</p>
+  @helper.form(action = routes.Application.edit) {
+    @(helper.inputText (
+      field = form1("id")
+    ))
+
+    <!-- ShopListモデルの要素をすべて必須項目として扱っているので、渡すときにすべて入力された状態で渡さなければならない。よって泥臭いけど非表示の項目としてすべてSubmitする-->
+    <input type="hidden" name="name" value="dummy" />
+    <input type="hidden" name="name_en" value="dummy" />
+    <input type="hidden" name="address" value="dummy" />
+    <input type="hidden" name="telephone_number" value="dummy" />
+
+    <input type="submit">
+  }
+}

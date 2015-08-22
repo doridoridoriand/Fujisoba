@@ -6,18 +6,31 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.*;
 
+import com.avaje.ebean.annotation.*;
+
 import play.db.ebean.*;
 import play.data.validation.*;
+import play.data.validation.Constraints.*;
 
 @Entity
 public class ShopList extends Model {
 
   @Id
   public Long id;
+
+  @Required
   public String name;
+
+  @Required
   public String name_en;
+
+  @Required
   public String address;
+
+  @Required
   public String telephone_number;
+
+  @CreatedTimestamp
   public Date created_at;
 
 
