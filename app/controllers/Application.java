@@ -127,4 +127,16 @@ public class Application extends Controller implements Constants {
     }
     return ok(find.render("検索", form, entries));
   }
+
+  public static Result findMultiWord() {
+    Form<FindForm> form = new Form(FindForm.class).bindFromRequest();
+    List<ShopList> entries = null;
+    if (!form.hasErrors()) {
+      String input = form.get().input;
+      // スペース区切りで入力した場合、すべて異なる要素として配列にぶち込む
+      String[] array = input.replace("　", " ").split(" ");
+      entries = ShopList.find.where().in("name", array).findList();
+    }
+    return ok(findMultiWord.render("検索(複数語対応)", form, entries));
+  }
 }
