@@ -4,6 +4,7 @@ import play.*;
 import play.mvc.*;
 import play.data.*;
 import static play.data.Form.*;
+import play.data.validation.Constraints.Required;
 
 import java.util.*;
 
@@ -102,5 +103,28 @@ public class Application extends Controller implements Constants {
     } else {
       return ok(delete.render(deleteWrongInputContentError, form));
     }
+  }
+
+  // Formからのデーターを読み込み(モデルの責務??)
+  public static class FindForm {
+    @Required
+    public String input;
+  }
+
+  public static Result find() {
+    Form<FindForm> form = new Form(FindForm.class).bindFromRequest();
+    List<ShopList> entries = null;
+
+    if (!form.hasErrors()) {
+      String input = form.get().input;
+      // FindFormのinputに書かれた文言がShopListモデルのname要素と一致するものを抜き出す(完全一致)
+      entries = ShopList.find.where().eq("name", input).findList();
+      // 完全一致で検索して、entryが一件も出てこなかった場合、ilikeで部分一致の再検索をかけるっていう雑な条件分岐
+      // List型のentriesのサイズを調べてnullだったら一件もヒットしなかったとみなしている
+      if (entries.size() == 0) {
+        entries = ShopList.find.where().ilike("name", "%" + input + "%").findList();
+      }
+    }
+    return ok(find.render("検索", form, entries));
   }
 }

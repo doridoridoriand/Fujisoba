@@ -1,0 +1,15 @@
+@(msg: String, form1: Form[Application.FindForm], entries: List[ShopList])
+
+@main("Sample") {
+  <h1>Find Data</h1>
+  <p>@msg</p>
+
+  @helper.form(action = routes.Application.find) {
+    @(helper.inputText (
+      field = form1("input")
+    ))
+    <input type="submit">
+  }
+  <hr>
+  <p>@entries</p>
+}
