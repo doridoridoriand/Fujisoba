@@ -40,7 +40,11 @@ public class ShopList extends Model {
 
   @Override
   public String toString() {
-    return (id + name + name_en + address + telephone_number + created_at);
+    return ("[" + id + " " +name + " " + name_en + " " +address + " " + telephone_number + " " +created_at + "]");
   }
 
+  // nameを引数に入れるとDBから完全一致する要素の最初の１つを取ってくる
+  public static ShopList findByName(String input) {
+    return Message.find.where().eq("name", input).findList().get(0);
+  }
 }
