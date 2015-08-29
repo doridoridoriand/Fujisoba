@@ -33,6 +33,8 @@ public class ShopList extends Model {
   @CreatedTimestamp
   public Date created_at;
 
+  @UpdatedTimestamp
+  public Date updated_at;
 
   public static Finder<Long, ShopList> find = new Finder<Long, ShopList>(Long.class, ShopList.class);
 
